@@ -5,9 +5,94 @@ ls()
 ###################################################
 ## Step 0: Getting started with R 
 ###################################################
-setwd("D:\Online writing\mercy jun 24\Programming")
+setwd("C:/Users/jaycee/Desktop/Data-Science-and-Big-Data-Analytics--Wealth")
 lab1 <- read.table("lab1_01.txt", sep="|", header=TRUE)
 lab2 <- read.table("lab1_02.txt", sep="|", header=TRUE) 
+
+
+colnames(lab1)
+
+ls()
+rm(lab2)
+ls()
+ds <- lab1
+ds
+
+colnames(ds)
+
+colnames(ds) <- c("serialno", "income", "rooms")
+
+summary(ds$income)
+
+range(ds$income)
+sd(ds$income)
+
+var(ds$income)
+
+plot(density(ds$income))
+
+
+summary(ds$rooms)
+
+range(ds$rooms)
+
+sd(ds$rooms)
+
+plot(as.factor(ds$rooms))
+(m <- mean(ds$income, trim = 0.10))
+
+summary(m)
+
+ds <- subset(ds, ds$income >= 10000 & ds$income < 1000000)
+summary(ds)
+
+quantile(ds$income, seq(from=0, to=1, length=11))
+summary(ds$income)
+
+summary(ds$income, ds$rooms)
+breaks <- c(0, 23000, 52000, 82000, 250000, 999999)
+
+breaks
+labels <- c("Poverty", "LowerMid", "UpperMind", "Wealthy", "Rich")
+
+wealth <- cut(ds$income,breaks, labels)
+ds <- cbind(ds, wealth)
+head(ds)
+
+wt <- table(wealth)
+percent <- wt/sum(wt) * 100
+wt
+
+percent
+plot(wt)
+nt <- table(wealth, ds$rooms)
+print(nt)
+
+plot(nt)
+rm(wealth, breaks, labels)
+
+ls()
+save(ds, wt, nt, file = "Census.Rdata")
+ls()
+library(MASS)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # look at some data values 
 
@@ -73,18 +158,18 @@ reviewers <- c("Siskel", "Siskel", "Ebert", "Ebert", "Rowan", "Martin", "Rowan")
 ## Step 3: factors and lists
 ###################################################
 f <- factor(ratings, levels)  
- 
+
 fl <- list(ratings=ratings, critics=critics, 
-		movies=movies, attendance=attendance)
-	
+           movies=movies, attendance=attendance)
+
 ###################################################
 ## Step 4: Matrices, Tables, and Data Frames
 ###################################################
 
 mdat <- matrix(c(1,2,3, 11,12,13), nrow = 2, ncol=3, byrow=TRUE,
                dimnames = list(c("row1", "row2"),
-					 c("C1", "C2", "C3")))
-					 
+                               c("C1", "C2", "C3")))
+
 t <- table(ratings, reviewers)  
 
 ###################################################
