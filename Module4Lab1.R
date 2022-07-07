@@ -77,11 +77,26 @@ ls()
 library(MASS)
 
 
+with(ds, {hist(income, main="Distribution of Household Income", freq=FALSE) })
+
+
+logincome = log10(ds$income)
+hist(logincome, main = "Distribution of Household Income", freq = FALSE)
+
+lines(density(ds$income), lty=2, lwd=2)
+
+with(ds, cor(income, rooms))
 
 
 
+n = length(ds$income)
+with(ds, cor(runif(n), rooms))
 
 
+boxplot(income ~ as.factor(rooms), data=ds, range=0, outline=F, log="y", xlab = "# rooms", ylab = "Income")
+
+
+boxplot(rooms ~ wealth, data = ds, main="Room by Wealth", xlab = "Category", ylab="# rooms")
 
 
 
